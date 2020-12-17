@@ -1,83 +1,87 @@
-import * as React from 'react';
-import { Text, View } from 'react-native';
+import  React ,{useState,useEffect} from 'react';
+import { Text, View,TouchableOpacity,TouchableNativeFeedback,Dimensions} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons,MaterialIcons,AntDesign,Entypo ,MaterialCommunityIcons} from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-function HomeScreen() {
+
+
+const window = Dimensions.get("window");
+const screen = Dimensions.get("screen");
+
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+
+function HomeScreen(props) {
+
+  const navigation = useNavigation();
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
+     <TouchableOpacity style={{backgroundColor:"red",padding:20}} onPress={()=>navigation.navigate('back')}><Text>hello</Text></TouchableOpacity>
     </View>
   );
 }
 
-function SettingsScreen() {
+
+
+ function App() {
+
+  const [dimensions, setDimensions] = useState({ window, screen });
+
+  const onChange = ({ window, screen }) => {
+    setDimensions({ window, screen });
+  };
+
+
+  useEffect(() => {
+    Dimensions.addEventListener("change", onChange);
+    return () => {
+      Dimensions.removeEventListener("change", onChange);
+    };
+  });
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
+     <NavigationContainer>
+    <Stack.Navigator headerMode={'none'}>
+    <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Screen name="back" component={HomeScreen} />
+  
+    
+  </Stack.Navigator>
 
-const Tab = createBottomTabNavigator();
+<View style={{width:dimensions.window.width-18,marginLeft:9,backgroundColor:"#1e74ff",height:70,position:"absolute",bottom:2,flexDirection:'row',justifyContent:"space-between"}}>
+ <View style={{backgroundColor:'#1e74ff',width:dimensions.window.width/5 , height: 100,flex:1,justifyContent:"center",alignItems:"center",paddingBottom:30}}>
+ <TouchableOpacity activeOpacity={0.2}><AntDesign name="home" size={30} color="white" /></TouchableOpacity>
+ </View>
+ <View style={{backgroundColor:'#1e74ff',width: dimensions.window.width/5, height: 100,flex:1,justifyContent:"center",alignItems:"center",paddingBottom:25}}>
+ <TouchableOpacity><MaterialIcons name="people-outline" size={30} color="#b7b7b7" /></TouchableOpacity>
+ </View>
+ <View style={{backgroundColor:'#1e74ff',width: dimensions.window.width/5 , height: 100,alignItems:"center"}}>
+  
+<View style={{width:70,height:70,borderRadius:60,backgroundColor:"#1e74ff",position:"absolute",bottom:50,right:0.5}}>
+  
+</View>
 
-export default function App() {
-  return (
-    <NavigationContainer>
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
+<View style={{justifyContent:"center",alignItems:"center" ,backgroundColor:"#efefef",marginTop:-14,width:50,height:50,borderRadius:50,borderWidth:4,borderColor:"#4f8ff7"}}>
+   <TouchableOpacity><MaterialIcons name="add" size={30} color="#1e74ff" /></TouchableOpacity>
+   </View> 
+ </View>
+ <View style={{backgroundColor:'#1e74ff',width: dimensions.window.width/5, height: 100,position:"relative",flex:1,justifyContent:"center",alignItems:"center",paddingBottom:30}}>
+  <TouchableOpacity><Entypo name="shop" size={30} color="#b7b7b7" /></TouchableOpacity>
+ </View>
+ <View style={{backgroundColor:'#1e74ff',width: dimensions.window.width/5, height: 100,flex:1,justifyContent:"center",alignItems:"center",paddingBottom:25}}>
+ <TouchableOpacity><MaterialCommunityIcons name="account" size={30} color="white" /></TouchableOpacity>
+ </View>
+</View>
 
-          if (route.name === 'Home') {
-            iconName = focused
-              ? 'ios-information-circle'
-              : 'ios-information-circle-outline';
-              
-          } else if (route.name === 'Settings') {
-            iconName = focused ? 'ios-list-box' : 'ios-list';
-          }
-
-          // You can return any component that you like here!
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor: "white",
-        inactiveTintColor: 'gray',
-       
-        labelStyle: {
-          fontSize: 12,
-        },
-        tabStyle: {
-          width: 100,
-          
-        },
-        style: {
-          height:60,
-          backgroundColor: '#226db7',
-        },
-        showLabel: false
-      }}
-   >
-      <Tab.Screen name="Home" component={HomeScreen}  options={{tabBarBadgeStyle:{backgroundColor: 'red'}}} />
-      <Tab.Screen name="Settings"  component={SettingsScreen} />
-      <Tab.Screen name="Settingss"  component={SettingsScreen} />
-      <Tab.Screen name="Settingsss" component={SettingsScreen} />
-      <Tab.Screen name="Settingssss" component={SettingsScreen} />
-     
-
-
-
-
-
-
-
-
-
-
-    </Tab.Navigator>
   </NavigationContainer>
+
+   
+
+
   );
 }
+
+
+export default App;
