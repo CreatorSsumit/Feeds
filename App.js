@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons,MaterialIcons,AntDesign,Entypo ,MaterialCommunityIcons} from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import Home from "./src/conatiner/home"
 
 
 
@@ -18,9 +19,9 @@ function HomeScreen(props) {
 
   const navigation = useNavigation();
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-     <TouchableOpacity style={{backgroundColor:"red",padding:20}} onPress={()=>navigation.navigate('back')}><Text>hello</Text></TouchableOpacity>
-    </View>
+    <View style={{backgroundColor:"white",flex:1}}>
+      <Home />
+   </View>
   );
 }
 
@@ -45,7 +46,7 @@ function HomeScreen(props) {
      <NavigationContainer>
     <Stack.Navigator headerMode={'none'}>
     <Stack.Screen name="Home" component={HomeScreen} />
-    <Stack.Screen name="back" component={HomeScreen} />
+   
   
     
   </Stack.Navigator>
